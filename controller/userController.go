@@ -6,7 +6,10 @@ import (
 	"golang-api/utility"
 	"golang-api/viewModel/comman/httpResponse"
 	userViewModel "golang-api/viewModel/user"
+	"io"
 	"net/http"
+	"os"
+	"path/filepath"
 
 	"github.com/labstack/echo/v4"
 )
@@ -144,6 +147,45 @@ func Delete(e echo.Context) error {
 
 	return e.JSON(http.StatusOK,httpResponse.SuccessResponse(userResData))
 
+}
 
+func Upload(e echo.Context) error {
+	apiContext := e.(*utility.ApiContext)
 
+	//get file parameter
+	file , err := apiContext.FormFile("file")
+	if err != nil {
+		return e.JSON(http.StatusBadRequest,httpResponse.ErrorResponse("bad request"))
+	}
+
+	//get file
+	src ,err := file.Open()
+	if err != nil {
+		return e.JSON(http.StatusBadRequest,httpResponse.ErrorResponse("can not open file"))
+	}
+
+	//create file
+	//get working directory
+	wd , err := os.Getwd()
+	//create custom name for file
+	fileName:= "customName"+filepath.Ext(file.Filename) //Ext : get format of file , .png ,.jpg ,...
+	imageServerPath := filepath.Join(wd,"public","images",fileName)
+	des , err := os.Create(imageServerPath)
+	if err != nil {
+		return e.JSON(http.StatusBadRequest,httpResponse.ErrorResponse("can not create file"))
+	}
+
+	//copy src to des
+	_ , err = io.Copy(des,src)
+	if err != nil {
+		return e.JSON(http.StatusBadRequest,httpResponse.ErrorResponse("can not copy file"))
+	}
+
+	userResData := struct {
+		IsSuccess bool
+	}{
+		IsSuccess: true,
+	}
+
+	return e.JSON(http.StatusOK,httpResponse.SuccessResponse(userResData))
 }
