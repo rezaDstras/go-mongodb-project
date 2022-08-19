@@ -5,6 +5,7 @@ go 1.18
 require (
 	github.com/go-playground/validator/v10 v10.11.0
 	github.com/golang-jwt/jwt v3.2.2+incompatible
+	github.com/google/uuid v1.3.0
 	github.com/labstack/echo/v4 v4.7.2
 	go.mongodb.org/mongo-driver v1.10.1
 	golang.org/x/exp v0.0.0-20220722155223-a9213eeb770e

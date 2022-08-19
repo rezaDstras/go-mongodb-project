@@ -6,23 +6,15 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"golang-api/database"
 	"golang-api/model/user"
+	userRepoInterface "golang-api/repository/interfaces"
 	"log"
 )
-
-type UserRepository interface {
-	GetUserList() ([]user.User, error)
-	GetUserById(id string) (user.User, error)
-	InsertUser(user user.User) (string, error)
-	UpdateUser(user user.User) error
-	DeleteUserById(id string)error
-	GetUserByusernameAndPassword(username , password string) (user.User, error)
-}
 
 type userRepository struct {
 	Db database.Db
 }
 
-func NewUserRepository() UserRepository {
+func NewUserRepository() userRepoInterface.UserRepository{
 	db, err := database.Connect()
 	if err != nil {
 		log.Fatalln(err)

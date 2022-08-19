@@ -2,45 +2,19 @@ package routing
 
 import (
 	"fmt"
-	"github.com/labstack/echo/v4/middleware"
-	"golang-api/controller"
-	"golang-api/viewModel/comman/security"
-	"net/http"
-
 	"github.com/labstack/echo/v4"
+	"golang-api/routing/routes"
 )
 
 func SetRoutes(e *echo.Echo) error {
 
-	//regular routing
-	e.GET("/user/15", func(c echo.Context) error {
-		return c.String(http.StatusOK, "/user/15")
-	}).Name = "get-user-15"
+	//auth routes
+	routes.AuthRoutes(e)
 
-
-	//login
-	e.POST("/login",controller.Login)
-
-	//grouping routes
-	user := e.Group("/user/")
-	user.GET(":id", controller.GetUserById).Name = "get-user-id"
-	user.GET("search", controller.SearchUser).Name = "search-user"
-
-
-	jwtConfig:=middleware.JWTConfig{
-		//secret key for jwt which is set in login
-		SigningKey: []byte("secret"),
-		Claims: &security.JwtClaims{},
-	}
-
-	user.POST("create", controller.Create,middleware.JWTWithConfig(jwtConfig)).Name = "create-user"
-
-
-
-	user.GET("list", controller.GetAllUsers).Name = "user-list"
-	user.PUT("update/:id", controller.Update).Name = "user-update"
-	user.DELETE("delete/:id", controller.Delete).Name = "user-delete"
-	user.POST("upload", controller.Upload).Name = "user-upload"
+	//users routes
+	routes.UserRoutes(e)
+	//news routes
+	routes.NewsRoutes(e)
 
 	//print all routes in consloe
 	for i, route := range e.Routes() {

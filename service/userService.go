@@ -3,26 +3,16 @@ package service
 import (
 	"golang-api/model/user"
 	"golang-api/repository"
+	userServiceInterface "golang-api/service/interfaces"
 	userViewModel "golang-api/viewModel/user"
-	"time"
 	"golang.org/x/exp/slices"
+	"time"
 )
-
-type UserService interface {
-	GetUserList() ([]user.User, error)
-	GetUserById(id string) (user.User, error)
-	GetUserByUsernameAndPassword(login userViewModel.LoginViewModel) (user.User, error)
-	InsertUser(userInput userViewModel.CreateUserViewModel) (string ,error)
-	UpadteUser(userInput userViewModel.UpdateUserViewModel) error
-	DeleteUserByID(id string) error
-	IsUserValidForAccess(userId , roleName string) bool
-	IsExistUser(userId string) bool
-}
 
 type userService struct {
 }
 
-func NewUserService() UserService {
+func NewUserService() userServiceInterface.UserService{
 	return userService{}
 }
 

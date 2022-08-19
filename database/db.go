@@ -34,3 +34,7 @@ func (db *Db) GetUserCollection() *mongo.Collection{
 	userCollection := db.clientDB.Database("golang").Collection("users")
 	return userCollection
 }
+func (db *Db) GetNewsCollection() *mongo.Collection{
+	newsCollection := db.clientDB.Database("golang").Collection("news")
+	return newsCollection
+}

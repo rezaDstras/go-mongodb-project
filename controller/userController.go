@@ -174,7 +174,7 @@ func Upload(e echo.Context) error {
 	if err != nil {
 		return e.JSON(http.StatusBadRequest,httpResponse.ErrorResponse("can not create file"))
 	}
-
+	defer des.Close()
 	//copy src to des
 	_ , err = io.Copy(des,src)
 	if err != nil {
