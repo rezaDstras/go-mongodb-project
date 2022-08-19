@@ -38,6 +38,8 @@ func SetRoutes(e *echo.Echo) error {
 
 
 	user.GET("list", controller.GetAllUsers).Name = "user-list"
+	user.PUT("update/:id", controller.Update).Name = "user-update"
+	user.DELETE("delete/:id", controller.Delete).Name = "user-delete"
 
 	//print all routes in consloe
 	for i, route := range e.Routes() {

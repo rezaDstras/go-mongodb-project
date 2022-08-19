@@ -14,5 +14,5 @@ type User struct {
 	Password      string    `query:"password" bson:"password,omitempty"`
 	RegisterDate  time.Time `query:"registerDate" bson:"registerDate,omitempty"`
 	CreatorUserId string    `query:"creatorUserId" bson:"creatorUserId,omitempty"`
-	Rules         []string    `bson:"rules,omitempty"`
+	Roles        []string    `bson:"roles,omitempty"`
 }
