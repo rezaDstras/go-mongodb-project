@@ -1,5 +1,5 @@
 
-#GOLANG API
+GOLANG API
 
 Packages : 
 
@@ -13,7 +13,7 @@ Packages :
 
 
 -----------------------
-###go Build Steps
+go Build Steps
 1 .Create bin directory in working directory
 
 ```$ mkdir bin```
